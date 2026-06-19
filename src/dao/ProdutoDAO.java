@@ -6,8 +6,12 @@ import util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class ProdutoDAO {
+
 
     public void salvar(Produto obj) {
         
@@ -36,4 +40,27 @@ public class ProdutoDAO {
             throw new RuntimeException("Erro ao salvar o produto: " + e.getMessage());
         }
     }
+
+    public List<Produto> listarTodos(){
+        List<Produto> listaProdutos = new ArrayList<>();
+
+        String sqlSelect = "SELECT * FROM produto";
+        
+        try {
+            Connection conexao = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sqlSelect);
+
+            ResultSet resultadoBusca = stmt.executeQuery();
+
+            while (resultadoBusca.next() == true) {
+                Produto produto = new Produto();
+            }
+            
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+    }
+
 }
