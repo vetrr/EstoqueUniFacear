@@ -10,7 +10,7 @@ public class ConnectionFactory {
     protected static String usuario = "estoque";
     protected static String senha = "Unifacear@2026";
 
-    // 2. O método que as outras classes vão chamar para pegar a conexão
+    
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(url, usuario, senha);
