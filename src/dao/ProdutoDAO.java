@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 
 public class ProdutoDAO {
 
-
+    //MÉTODO PARA SALVAR UM OBJETO PRODUTO NO BANCO DE DADOS
     public void salvar(Produto obj) {
         
         String sqlInsert = "INSERT INTO produto (nome, apresentacao, volume, unidade_medida, utilizacao) VALUES (?, ?, ?, ?, ?)";
@@ -41,6 +41,7 @@ public class ProdutoDAO {
         }
     }
 
+    //MÉTODO PARA LISTAR OS PRODUTOS DA TABELA produto
     public List<Produto> listarTodos(){
         List<Produto> listaProdutos = new ArrayList<>();
 
@@ -54,13 +55,26 @@ public class ProdutoDAO {
 
             while (resultadoBusca.next() == true) {
                 Produto produto = new Produto();
+
+                produto.setIdProduto(resultadoBusca.getInt("id_produto"));
+                produto.setNome(resultadoBusca.getString("nome"));
+                produto.setApresentacao(resultadoBusca.getString("apresentacao"));
+                produto.setVolume(resultadoBusca.getDouble("volume"));
+                produto.setUnidadeMedida(resultadoBusca.getString("unidade_medida"));
+                produto.setUtilizacao(resultadoBusca.getString("utilizacao"));
+
+                listaProdutos.add(produto);
+
             }
             
+            resultadoBusca.close();
+            stmt.close();
+            conexao.close();
 
         } catch (Exception e) {
-            // TODO: handle exception
+            throw new RuntimeException("Erro ao listar os produtos: " + e.getMessage());
         }
-
+        return listaProdutos;
     }
 
 }

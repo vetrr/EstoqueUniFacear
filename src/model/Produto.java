@@ -8,6 +8,20 @@ public class Produto {
     private String unidadeMedida;
     private String utilizacao;
     
+    
+    public Produto() {
+    }
+
+    public Produto(Integer idProduto, String nome, String apresentacao, Double volume, String unidadeMedida, String utilizacao) {
+        this.idProduto = idProduto;
+        this.nome = nome;
+        this.apresentacao = apresentacao;
+        this.volume = volume;
+        this.unidadeMedida = unidadeMedida;
+        this.utilizacao = utilizacao;
+    }
+
+
     public Integer getIdProduto() {
         return idProduto;
     }
