@@ -30,15 +30,26 @@ public class ConnectionFactory {
         List<Produto> listaProdutos = new ArrayList<>();
         
         ProdutoDAO dao = new ProdutoDAO();
-        Produto prod = new Produto(10, "CELULAR", "Lacrado na caixa", 5.5, "KG", "Uso corporativo");
+        /*Produto prod = new Produto(10, "CELULAR", "Lacrado na caixa", 5.5, "KG", "Uso corporativo");
 
         dao.salvar(prod);
-        listaProdutos.add(prod);
+        listaProdutos.add(prod);*/
         listaProdutos=(dao.listarTodos());
 
         for (Produto i : listaProdutos) {
             System.out.println("Nome: "+i.getNome()+"| Uso: "+ i.getUtilizacao());
         }
+
+        System.out.println("Buscar por ID");
+
+        Produto produtoBuscado =dao.buscarPorId(1);
+
+        if(produtoBuscado != null){
+            System.out.println("ID: "+produtoBuscado.getIdProduto());
+            System.out.println("NOME: "+produtoBuscado.getNome());
+
+        }
+
 
     }
 

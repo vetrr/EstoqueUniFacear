@@ -77,4 +77,45 @@ public class ProdutoDAO {
         return listaProdutos;
     }
 
+    public Produto buscarPorId(Integer id){
+        Produto produtoEncontrado = null;
+
+        String sqlBucarId = "SELECT * FROM produto WHERE id_produto = ?";
+
+        try {
+            
+        Connection conexao = ConnectionFactory.getConnection();//CONEXAO COM O BANCO
+
+        PreparedStatement stmt = conexao.prepareStatement(sqlBucarId);//BUSCA SQL DE FORMA PROTEGIDA PARA EVITAR SQL INJECTION
+        stmt.setInt(1, id);
+
+        ResultSet resultadoBusca = stmt.executeQuery();//DEVOLVE UM OBJETO COM A BUSCA SQL
+
+        
+        if (resultadoBusca.next() == true) {
+            Produto produto = new Produto();
+            
+            produto.setIdProduto(resultadoBusca.getInt("id_produto"));//Fui na coluna idProduto e fiz o objeto produto ter o mesmo idProduto da colna
+            produto.setNome(resultadoBusca.getString("nome"));
+            produto.setApresentacao(resultadoBusca.getString("apresentacao"));
+            produto.setVolume(resultadoBusca.getDouble("volume"));
+            produto.setUnidadeMedida(resultadoBusca.getString("unidade_medida"));
+            produto.setUtilizacao(resultadoBusca.getString("utilizacao"));
+            
+            produtoEncontrado = produto;
+            
+        }
+                
+        resultadoBusca.close();
+        stmt.close();
+        conexao.close();
+        
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao listar os produtos: " + e.getMessage());
+
+    }
+        return produtoEncontrado;
+    
+    }
+
 }
