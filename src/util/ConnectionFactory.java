@@ -40,7 +40,7 @@ public class ConnectionFactory {
             System.out.println("Nome: "+i.getNome()+"| Uso: "+ i.getUtilizacao());
         }
 
-        System.out.println("Buscar por ID");
+        //System.out.println("Buscar por ID");
 
         Produto produtoBuscado =dao.buscarPorId(1);
 
@@ -50,7 +50,14 @@ public class ConnectionFactory {
 
         }
 
+        produtoBuscado.setNome("SMARTPHONE VINTAGE");
 
+        dao.atualizar(produtoBuscado);
+
+        if(produtoBuscado != null){
+            System.out.println("ID: "+produtoBuscado.getIdProduto());
+            System.out.println("NOME: "+produtoBuscado.getNome());
+
+        }
     }
-
 }

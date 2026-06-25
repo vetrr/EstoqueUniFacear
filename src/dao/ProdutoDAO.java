@@ -19,7 +19,6 @@ public class ProdutoDAO {
 
         try {
             Connection conexao = ConnectionFactory.getConnection();
-            
             PreparedStatement stmt = conexao.prepareStatement(sqlInsert);
             
             // relacionando a ? com os tipos de dados da classe Produto
@@ -28,6 +27,7 @@ public class ProdutoDAO {
             stmt.setDouble(3, obj.getVolume());
             stmt.setString(4, obj.getUnidadeMedida());
             stmt.setString(5, obj.getUtilizacao());
+
             
             stmt.executeUpdate();
             
@@ -118,4 +118,47 @@ public class ProdutoDAO {
     
     }
 
+    public void atualizar(Produto produto){
+        String sqlAtualizar = "UPDATE produto SET nome = ?, apresentacao = ?, volume = ?, unidade_medida = ?, utilizacao = ? WHERE id_produto = ?";
+        try {
+            Connection conexao = ConnectionFactory.getConnection();//CONEXAO COM O BANCO
+            PreparedStatement stmt = conexao.prepareStatement(sqlAtualizar);//BUSCA SQL DE FORMA PROTEGIDA PARA EVITAR SQL INJECTION
+
+            stmt.setString(1, produto.getNome());
+            stmt.setString(2, produto.getApresentacao());
+            stmt.setDouble(3, produto.getVolume());
+            stmt.setString(4, produto.getUnidadeMedida());
+            stmt.setString(5, produto.getUtilizacao());
+            stmt.setInt(6, produto.getIdProduto());
+
+            stmt.executeUpdate();
+            stmt.close();
+            conexao.close();
+            
+            System.out.println("Produto atualizado no banco de dados com sucesso!");
+    
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar o produto: " + e.getMessage());
+        }
+    }
+
+    public void excluir(Integer id){
+        String sqlExcluir = "DELETE FROM produto WHERE id_produto = ?";
+
+        try {
+            Connection conexao = ConnectionFactory.getConnection();//CONEXAO COM O BANCO
+            PreparedStatement stmt = conexao.prepareStatement(sqlExcluir);//BUSCA SQL DE FORMA PROTEGIDA PARA EVITAR SQL INJECTION
+
+            stmt.setInt(1, id);//aqui estou dizendo que no lugar da ? estou atribuindo o id passado no cabeçalho da função
+
+            stmt.executeUpdate();
+            stmt.close();
+            conexao.close();
+
+            System.out.println("Produto deletado com sucesso!");
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar o produto: " + e.getMessage());
+            
+        }
+    }
 }
