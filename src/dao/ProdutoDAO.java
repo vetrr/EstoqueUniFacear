@@ -15,7 +15,7 @@ public class ProdutoDAO {
     //MÉTODO PARA SALVAR UM OBJETO PRODUTO NO BANCO DE DADOS
     public void salvar(Produto obj) {
         
-        String sqlInsert = "INSERT INTO produto (nome, apresentacao, volume, unidade_medida, utilizacao) VALUES (?, ?, ?, ?, ?)";
+        String sqlInsert = "INSERT INTO produto (nome, apresentacao, volume, unidade_medida, utilizacao) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             Connection conexao = ConnectionFactory.getConnection();
@@ -27,6 +27,7 @@ public class ProdutoDAO {
             stmt.setDouble(3, obj.getVolume());
             stmt.setString(4, obj.getUnidadeMedida());
             stmt.setString(5, obj.getUtilizacao());
+            stmt.setInt(6, obj.getIdSubLocalFk());
 
             
             stmt.executeUpdate();
@@ -62,6 +63,7 @@ public class ProdutoDAO {
                 produto.setVolume(resultadoBusca.getDouble("volume"));
                 produto.setUnidadeMedida(resultadoBusca.getString("unidade_medida"));
                 produto.setUtilizacao(resultadoBusca.getString("utilizacao"));
+                produto.setIdSubLocalFk(resultadoBusca.getInt("id_sublocal_fk"));
 
                 listaProdutos.add(produto);
 
@@ -101,6 +103,7 @@ public class ProdutoDAO {
             produto.setVolume(resultadoBusca.getDouble("volume"));
             produto.setUnidadeMedida(resultadoBusca.getString("unidade_medida"));
             produto.setUtilizacao(resultadoBusca.getString("utilizacao"));
+            produto.setIdSubLocalFk(resultadoBusca.getInt("id_sublocal_fk"));
             
             produtoEncontrado = produto;
             
@@ -119,7 +122,7 @@ public class ProdutoDAO {
     }
 
     public void atualizar(Produto produto){
-        String sqlAtualizar = "UPDATE produto SET nome = ?, apresentacao = ?, volume = ?, unidade_medida = ?, utilizacao = ? WHERE id_produto = ?";
+        String sqlAtualizar = "UPDATE produto SET nome = ?, apresentacao = ?, volume = ?, unidade_medida = ?, utilizacao = ?, id_sublocal_fk = ? WHERE id_produto = ?";
         try {
             Connection conexao = ConnectionFactory.getConnection();//CONEXAO COM O BANCO
             PreparedStatement stmt = conexao.prepareStatement(sqlAtualizar);//BUSCA SQL DE FORMA PROTEGIDA PARA EVITAR SQL INJECTION
@@ -129,7 +132,8 @@ public class ProdutoDAO {
             stmt.setDouble(3, produto.getVolume());
             stmt.setString(4, produto.getUnidadeMedida());
             stmt.setString(5, produto.getUtilizacao());
-            stmt.setInt(6, produto.getIdProduto());
+            stmt.setInt(6, produto.getIdSubLocalFk());
+            stmt.setInt(7, produto.getIdProduto());
 
             stmt.executeUpdate();
             stmt.close();
