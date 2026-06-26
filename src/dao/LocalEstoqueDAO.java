@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.LocalEstoque;
-import model.Produto;
 import util.ConnectionFactory;
 
 public class LocalEstoqueDAO {
@@ -50,15 +49,12 @@ public class LocalEstoqueDAO {
             while (resultadoBusca.next() == true) {
                 LocalEstoque localEstoque = new LocalEstoque();
 
-                localEstoque.setIdProduto(resultadoBusca.getInt("id_produto"));
-                localEstoque.setNome(resultadoBusca.getString("nome"));
-                localEstoque.setApresentacao(resultadoBusca.getString("apresentacao"));
-                localEstoque.setVolume(resultadoBusca.getDouble("volume"));
-                localEstoque.setUnidadeMedida(resultadoBusca.getString("unidade_medida"));
-                localEstoque.setUtilizacao(resultadoBusca.getString("utilizacao"));
-                localEstoque.setIdSubLocalFk(resultadoBusca.getInt("id_sublocal_fk"));
+                localEstoque.setIdEstoque(resultadoBusca.getInt("id_estoque"));
+                localEstoque.setNomeLocal(resultadoBusca.getString("nome_local"));
+                localEstoque.setTipo(resultadoBusca.getString("tipo"));
+                localEstoque.setId_campus(resultadoBusca.getInt("id_campus"));
 
-                listaProdutos.add(produto);
+                listaLocais.add(localEstoque);
 
             }
             
@@ -66,10 +62,51 @@ public class LocalEstoqueDAO {
             stmt.close();
             conexao.close();
 
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao listar os produtos: " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar locais: " + e.getMessage());
         }
-        return listaProdutos;
+        return listaLocais;
+    }
+
+        public void atualizar(LocalEstoque localEstoque){
+        String sqlAtualizar = "UPDATE local_estoque SET nome_local= ?, tipo= ? WHERE id_estoque= ?";
+        try {
+            Connection conexao = ConnectionFactory.getConnection();//CONEXAO COM O BANCO
+            PreparedStatement stmt = conexao.prepareStatement(sqlAtualizar);//BUSCA SQL DE FORMA PROTEGIDA PARA EVITAR SQL INJECTION
+
+            stmt.setString(1, localEstoque.getNomeLocal());
+            stmt.setString(2, localEstoque.getTipo());
+            stmt.setInt(3, localEstoque.getIdEstoque());
+
+            stmt.executeUpdate();
+            stmt.close();
+            conexao.close();
+            
+            System.out.println("Local atualizado no banco de dados com sucesso!");
+    
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar Local: " + e.getMessage());
+        }
+    }
+
+    public void excluir(Integer id){
+        String sqlExcluir = "DELETE FROM local_estoque WHERE id_estoque = ?";
+
+        try {
+            Connection conexao = ConnectionFactory.getConnection();//CONEXAO COM O BANCO
+            PreparedStatement stmt = conexao.prepareStatement(sqlExcluir);//BUSCA SQL DE FORMA PROTEGIDA PARA EVITAR SQL INJECTION
+
+            stmt.setInt(1, id);//aqui estou dizendo que no lugar da ? estou atribuindo o id passado no cabeçalho da função
+
+            stmt.executeUpdate();
+            stmt.close();
+            conexao.close();
+
+            System.out.println("Local deletado com sucesso!");
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar Local: " + e.getMessage());
+            
+        }
     }
 
 

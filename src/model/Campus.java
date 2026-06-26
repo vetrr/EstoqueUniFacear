@@ -1,0 +1,30 @@
+package model;
+
+public class Campus {
+    private Integer idCampus;
+    private String nome;
+    
+    public Campus() {
+    }
+
+    public Campus(Integer idCampus, String nome) {
+        this.idCampus = idCampus;
+        this.nome = nome;
+    }
+
+    public Integer getIdCampus() {
+        return idCampus;
+    }
+
+    public void setIdCampus(Integer idCampus) {
+        this.idCampus = idCampus;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+}
