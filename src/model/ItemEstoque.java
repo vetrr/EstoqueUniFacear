@@ -12,8 +12,7 @@ public class ItemEstoque {
     public ItemEstoque() {
     }
 
-    public ItemEstoque(Integer idProdutoFK, Integer idEstoqueFK, Integer quantidadeAtual,
-            Integer quantidadeMinimaAlerta, Date dataValidade) {
+    public ItemEstoque(Integer idProdutoFK, Integer idEstoqueFK, Integer quantidadeAtual, Integer quantidadeMinimaAlerta, Date dataValidade) {
         this.idProdutoFK = idProdutoFK;
         this.idEstoqueFK = idEstoqueFK;
         this.quantidadeAtual = quantidadeAtual;
