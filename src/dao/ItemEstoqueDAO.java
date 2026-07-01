@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.ItemEstoque;
-import model.Produto;
 import util.ConnectionFactory;
 
 public class ItemEstoqueDAO {
