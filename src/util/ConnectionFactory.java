@@ -3,11 +3,6 @@ package util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import dao.ProdutoDAO;
-import model.Produto;
 
 public class ConnectionFactory {
 
@@ -15,12 +10,13 @@ public class ConnectionFactory {
     protected static String usuario = "estoque";
     protected static String senha = "Unifacear@2026";
 
-    
-    public static Connection getConnection() {
+    public static Connection getConnection() { 
         try {
+            Class.forName("org.postgresql.Driver");
             return DriverManager.getConnection(url, usuario, senha);
-        }
-        catch (SQLException e) {
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Driver do PostgreSQL não encontrado na pasta lib!", e);
+        } catch (SQLException e) {
             throw new RuntimeException("A conexão falhou: " + e.getMessage());
         }
     }
