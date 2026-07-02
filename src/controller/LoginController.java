@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("usuarioAutenticado", usuarioLogado);
             
             // Redireciona para o sistema
-            response.sendRedirect("index.html");
+            response.sendRedirect("index.jsp");
             
         } else {
             // Se o usuário não existe ou senha errada, manda de volta para o login
